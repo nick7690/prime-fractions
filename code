@@ -1,0 +1,41 @@
+function subtractPrimeFractions(a, b) {
+  // check if both fractions are prime
+  if (!isPrime(a.numerator) || !isPrime(a.denominator) || !isPrime(b.numerator) || !isPrime(b.denominator)) {
+    console.log("Error: One or more fractions are not prime.");
+    return;
+  }
+
+  // find the common denominator
+  var common = a.denominator * b.denominator;
+  var numer1 = a.numerator * (common / a.denominator);
+  var numer2 = b.numerator * (common / b.denominator);
+
+  // subtract the numerators
+  var numer = numer1 - numer2;
+
+  // return the simplified fraction
+  return simplifyFraction(numer, common);
+}
+
+function isPrime(num) {
+  for(var i = 2; i < num; i++)
+    if(num % i === 0) return false;
+  return num !== 1;
+}
+
+function simplifyFraction(numer, denom) {
+  var gcd = findGCD(numer, denom);
+  return { numerator: numer/gcd, denominator: denom/gcd };
+}
+
+function findGCD(a, b) {
+  if (b === 0)
+    return a;
+  return findGCD(b, a % b);
+}
+
+// Usage example:
+var a = { numerator: 2, denominator: 3 };
+var b = { numerator: 5, denominator: 7 };
+var result = subtractPrimeFractions(a, b);
+console.log(result);
